@@ -4,7 +4,7 @@ from dataclasses import dataclass
 
 import numpy as np
 import pandas as pd
-from exception import CustomException
+from .exception import CustomException
 import dill
 import pickle
 from sklearn.metrics import r2_score
@@ -21,6 +21,13 @@ def save_object(file_path, obj):
         with open(file_path, "wb") as file_obj:
             pickle.dump(obj, file_obj)
 
+    except Exception as e:
+        raise CustomException(e, sys)
+
+def load_object(file_path):
+    try:
+        with open(file_path, "rb")  as file_obj:
+            return pickle.load(file_obj)
     except Exception as e:
         raise CustomException(e, sys)
 
